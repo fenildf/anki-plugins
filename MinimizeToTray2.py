@@ -52,6 +52,15 @@ def trayActivated(reason):
 def createSysTray():
     self.anki_visible = True
     self.last_focus = self
+    # Check if self (i.e., mw.aqt) already has a trayIcon
+    try:
+        type(self.trayIcon)
+    except AttributeError:
+        # No. So go on.
+        pass
+    else:
+        # Yes. Don't create another one
+        return
     self.trayIcon = QSystemTrayIcon(self)
     ankiLogo = QIcon()
     ankiLogo.addPixmap(QPixmap(_fromUtf8(":/icons/anki.png")), QIcon.Normal, QIcon.Off)
